@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Events</title>
+    <style>
+
+        html, body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        .circle {
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
+
+            position: fixed;
+        }
+
+    </style>
+</head>
+<body>
+
+    <button id="btn">Click to Get Event</button>
+    <script>
+
+        function Position(x, y) {
+            this.pos = [x, y];
+        }
+        Position.prototype.x = function () { return this.pos[0]; };
+        Position.prototype.y = function () { return this.pos[1]; };
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('btn').addEventListener('click', function (event) {
+                console.log(event);
+            });
+
+            document.body.addEventListener('click', function (event) {
+                var position = new Position(event.clientX, event.clientY);
+                var circle = createElement('div', 'circle', document.body);
+
+                circle.style.left = position.x + 'px';
+                circle.style.top = position.y + 'px';
+
+                circle.style.backgroundColor = 'red';
+
+
+            });
+        });
+
+        function createElement(type, _class, parent) {
+            var element = document.createElement(type);
+            element.className = _class;
+            parent.appendChild(element);
+            return element;
+        }
+
+    </script>
+</body>
+</html>
