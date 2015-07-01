@@ -1,13 +1,84 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
+<!doctype html>
+<html lang="en">
+<style>
+    .rectangle {
+        background-color: rgba(255, 0, 0, 0.51);
+        position: absolute;
+        border: 1px solid darkred;
+    }
+
+    html, body {
+        height: 300%;
+    }
+</style>
+<head>
     <meta charset="UTF-8">
-    <title>Drawing</title>
-
-
-
+    <title>Document</title>
 </head>
 <body>
 
+
+
+<script>
+
+    function Position(x, y) {
+        this.pos = [x, y];
+    }
+    Position.prototype.x = function () { return this.pos[0]; };
+    Object.defineProperty(Position.prototype, 'x', {
+        get: function () {
+            return this.pos[0];
+        }
+    });
+    Object.defineProperty(Position.prototype, 'y', {
+        get: function () {
+            return this.pos[1];
+        }
+    });
+
+    var rectangle;
+
+
+    document.body.addEventListener('mousedown', function (e) {
+
+        var position = new Position(e.pageX, e.pageY);
+        rectangle = createElement('div', document.body, 'rectangle');
+        rectangle.top_left_corner = position;
+        rectangle.style.left = position.x + 'px';
+        rectangle.style.top = position.y + 'px';
+
+        this.appendChild(rectangle);
+
+        this.addEventListener('mousemove', moveHandler);
+
+    });
+
+    document.body.addEventListener('mouseup', function () {
+        rectangle = null;
+        this.removeEventListener('mousemove', moveHandler);
+    });
+
+    function moveHandler(e) {
+        // when the mouse moves, recalculate the height and width
+        var top_left_corner = rectangle.top_left_corner;
+        rectangle.style.width = (e.pageX - top_left_corner.x) + 'px';
+        rectangle.style.height = (e.pageY - top_left_corner.y) + 'px';
+    }
+
+    function createElement(elementType, parent, className, innerHTML, custom) {
+        var element = document.createElement(elementType);
+        if (parent) parent.appendChild(element);
+        if (className) element.className = className;
+        if (innerHTML) element.innerHTML = innerHTML;
+
+        if (typeof custom !== 'undefined') {
+            for (var prop in custom) {
+                element.setAttribute(prop, custom[prop]);
+            }
+        }
+
+        return element;
+    }
+</script>
 </body>
 </html>
