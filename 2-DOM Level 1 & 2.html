@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DOM Level 1 and DOM Level 2</title>
+    <link rel="stylesheet" href="base.css"/>
+</head>
+<body>
+
+    <button>Click</button>
+
+<script>
+
+    var button = document.body.firstElementChild;
+
+    /* DOM Level 1 */
+    /*button.onclick = function (event) {
+        console.log('This is the event handler for click - 1');
+    };
+
+    button.onclick = function (event) {
+        console.log('This is the event handler for click - 2');
+    };*/
+
+    /* DOM Level 2 */
+    button.addEventListener('click', function (e) {
+        console.log('This is the event handler for click - 1');
+    });
+
+    button.addEventListener('click', function (e) {
+        console.log('This is the event handler for click - 2');
+    });
+
+</script>
+</body>
+</html>

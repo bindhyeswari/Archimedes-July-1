@@ -14,9 +14,24 @@
         .circle {
             height: 20px;
             width: 20px;
-            background-color: #eee;
+            background-color: red;
+            border-radius: 50%;
 
             position: fixed;
+        }
+
+        .circle.animate {
+            animation: kf 750ms ease;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes kf {
+            0% {
+                background-color: red;
+            }
+            100% {
+                background-color: white;
+            }
         }
 
     </style>
@@ -26,11 +41,22 @@
     <button id="btn">Click to Get Event</button>
     <script>
 
+        // todo: Change to work with a single element, not multiple elements.
+
         function Position(x, y) {
             this.pos = [x, y];
         }
         Position.prototype.x = function () { return this.pos[0]; };
-        Position.prototype.y = function () { return this.pos[1]; };
+        Object.defineProperty(Position.prototype, 'x', {
+            get: function () {
+                return this.pos[0];
+            }
+        });
+        Object.defineProperty(Position.prototype, 'y', {
+            get: function () {
+                return this.pos[1];
+            }
+        });
 
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -42,11 +68,17 @@
                 var position = new Position(event.clientX, event.clientY);
                 var circle = createElement('div', 'circle', document.body);
 
-                circle.style.left = position.x + 'px';
-                circle.style.top = position.y + 'px';
+                console.log(position.x + 'px');
+                circle.style.left = position.x - 10 + 'px';
+                circle.style.top = position.y - 10 + 'px';
 
                 circle.style.backgroundColor = 'red';
 
+                circle.classList.add('animate');
+
+                setTimeout(function () {
+                    document.body.removeChild(circle);
+                }, 1000);
 
             });
         });

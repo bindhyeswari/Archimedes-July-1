@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Event Phase</title>
+    <link rel="stylesheet" href="base.css"/>
+    <style>
+
+        div {
+            background-color: rgba(255, 0, 0, 0.08);
+            border: 1px solid red;
+            padding: 3em;
+        }
+
+    </style>
+</head>
+<body>
+    <button>Event Phase</button>
+
+
+    <div id="div1">
+        <div id="div2">
+            <div id="div3">
+                Click Here
+            </div>
+        </div>
+    </div>
+
+
+    <button id="deregister">DeRegister Events</button>
+
+<script>
+    document.querySelector('button').addEventListener('click', function (event){
+        console.log(event.eventPhase);
+    });
+
+    var div3 = document.querySelector('#div3');
+
+    document.querySelector('#div1').addEventListener('click', clickHandler, true); // target capturing or bubbling - true or false
+    document.querySelector('#div1').addEventListener('click', clickHandler, false); // target capturing or bubbling - true or false
+    document.querySelector('#div2').addEventListener('click', clickHandler, true); // target capturing or bubbling - true or false
+    document.querySelector('#div2').addEventListener('click', clickHandler, false); // target capturing or bubbling - true or false
+    // document.querySelector('#div1').addEventListener('click', clickHandler, true); // target capturing or bubbling - true or false
+    document.querySelector('#div3').addEventListener('click', clickHandler); // target capturing or bubbling - true or false
+    // document.querySelector('#div3').addEventListener('click', clickHandler); // target capturing or bubbling - true or false
+    // document.querySelector('#div3').addEventListener('click', myClickHandler.bind(div3, 'Hello ...')); // target capturing or bubbling - true or false
+
+
+
+    function myClickHandler(message, event) {
+        console.log(message, 'The current   target is ', event.currentTarget, ' and the phase is ', event.eventPhase);
+    }
+
+    //
+
+    function clickHandler(event) {
+        console.log('The current target is ', event.currentTarget, ' and the phase is ', event.eventPhase);
+    }
+
+    document.querySelector('#deregister').addEventListener('click', function () {
+        document.querySelector('#div1').removeEventListener('click', clickHandler, false);
+        document.querySelector('#div1').removeEventListener('click', clickHandler, true);
+        document.querySelector('#div2').removeEventListener('click', clickHandler, false);
+        document.querySelector('#div2').removeEventListener('click', clickHandler, true );
+    });
+
+    /*div3.addEventListener('click', function (event) {
+        console.log(this);
+        console.log(event.currentTarget);
+    });*/
+
+</script>
+</body>
+</html>
